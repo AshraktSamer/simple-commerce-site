@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Store</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="UpperPart">
+      <h1>My Store</h1>
+      <div class="search-bar">
+        <input
+          type="text"
+          id="productSearch"
+          placeholder="Search for products..."
+        />
+        <select name="Category" id="category">
+          <option value="" >All Categories</option>
+          <option value="men's clothing">Men</option>
+          <option value="women's clothing">Women</option>
+          <option value="electronics">Electronics</option>
+          <option value="jewelery">Jewelry</option>
+        </select>
+        <input type="number" id="minPrice" placeholder="Min Price" />
+        <input type="number" id="maxPrice" placeholder="Max Price" />
+        <button id="apply-filter" onclick="searchProduct()">
+          Apply Filters
+        </button>
+      </div>
+
+      <div class="sorting">
+        <select name="Sort-by-price" id="sorting">
+          <option value="" disabled selected>Sort by price</option>
+          <option value="Min">Price: Low to High</option>
+          <option value="Max">Price: High to Low</option>
+        </select>
+      </div>
+
+      <div class="cart">
+        <h2>Shopping Cart</h2>
+        <div class="cart-item" id="cart-items">
+          <button id="remove" onclick="removeitem()" style="display: none">
+            Remove
+          </button>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <p id="totalQuantity">Total Quantity:</p>
+        <p id="totalPrice">Total Price: $</p>
+      </div>
+    </div>
+
+    <div class="container" id="product-container"></div>
+
+    <div id="popup" class="popup hidden">
+      <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <img id="popup-image" alt="Product Image" />
+        <h2 id="popup-title"></h2>
+        <p id="popup-description"></p>
+        <p id="popup-price"></p>
+      </div>
+    </div>
+
+    <div id="pagination-controls"></div>
+
+    <script src="Scripts.js"></script>
+  </body>
+</html>
