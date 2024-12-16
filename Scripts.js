@@ -20,15 +20,20 @@ const getData = async () => {
 //   console.log(allProducts);
 // });
 
-
 const initializeEventListeners = () => {
-  document.getElementById("sorting").addEventListener("change", sorting);
-  document.getElementById("category").addEventListener("change", selectCategory);
-  document.getElementById("apply-filter").addEventListener("click", searchProduct);
+  document
+    .getElementById("sorting")
+    .addEventListener("change", sorting);
+  document
+    .getElementById("category")
+    .addEventListener("change", selectCategory);
+  document
+    .getElementById("apply-filter")
+    .addEventListener("click", searchProduct);
 };
 
 const addToCart = (title, price) => {
-  const existingItem = cartItems.find(item => item.title === title);
+  const existingItem = cartItems.find((item) => item.title === title);
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
@@ -39,44 +44,48 @@ const addToCart = (title, price) => {
 };
 
 const updateCartDisplay = () => {
-    const cartItemsContainer = document.getElementById("cart-items");
-    cartItemsContainer.innerHTML = ""; 
-  
-    cartItems.forEach((item, index) => {
-      const newItem = document.createElement("p");
-      newItem.textContent = `${item.title} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
-      
-      
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Remove";
-      deleteButton.className = "delete-button"; 
-      deleteButton.onclick = () => removeItem(index); 
-  
-      
-      newItem.appendChild(deleteButton);
-      cartItemsContainer.appendChild(newItem);
-    });
-  };
+  const cartItemsContainer = document.getElementById("cart-items");
+  cartItemsContainer.innerHTML = "";
+
+  cartItems.forEach((item, index) => {
+    const newItem = document.createElement("p");
+    newItem.textContent = `${item.title} x ${item.quantity} - $${(
+      item.price * item.quantity
+    ).toFixed(2)}`;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Remove";
+    deleteButton.className = "delete-button";
+    deleteButton.onclick = () => removeItem(index);
+
+    newItem.appendChild(deleteButton);
+    cartItemsContainer.appendChild(newItem);
+  });
+};
 
 const updateCartSummary = () => {
-    let totalQuantity = 0;
-    let totalPrice = 0;
-  
-    cartItems.forEach((item) => {
-      totalQuantity += item.quantity;
-      totalPrice += item.price * item.quantity;
-    });
-  
-    document.getElementById("totalQuantity").innerText = `Total Quantity: ${totalQuantity}`;
-    document.getElementById("totalPrice").innerText = `Total Price: $${totalPrice.toFixed(2)}`;
-  };
-  
+  let totalQuantity = 0;
+  let totalPrice = 0;
+
+  cartItems.forEach((item) => {
+    totalQuantity += item.quantity;
+    totalPrice += item.price * item.quantity;
+  });
+
+  document.getElementById(
+    "totalQuantity"
+  ).innerText = `Total Quantity: ${totalQuantity}`;
+  document.getElementById(
+    "totalPrice"
+  ).innerText = `Total Price: $${totalPrice.toFixed(2)}`;
+};
+
 const removeItem = (index) => {
-    cartItems.splice(index, 1);
-    
-    updateCartDisplay();
-    updateCartSummary();  
-  };
+  cartItems.splice(index, 1);
+
+  updateCartDisplay();
+  updateCartSummary();
+};
 
 const renderProducts = (products) => {
   const container = document.getElementById("product-container");
@@ -85,7 +94,7 @@ const renderProducts = (products) => {
   const endIndex = startIndex + productsPerPage;
   const paginatedProducts = products.slice(startIndex, endIndex);
 
-  paginatedProducts.forEach(product => {
+  paginatedProducts.forEach((product) => {
     const card = createProductCard(product);
     container.appendChild(card);
   });
@@ -137,14 +146,20 @@ const createProductCard = (product) => {
 const searchProduct = () => {
   const query = document.getElementById("productSearch").value.toLowerCase();
   const minPrice = parseFloat(document.getElementById("minPrice").value) || 0;
-  const maxPrice = parseFloat(document.getElementById("maxPrice").value) || Infinity;
+  const maxPrice =
+    parseFloat(document.getElementById("maxPrice").value) || Infinity;
 
-  let filteredProducts = allProducts.filter(product => {
-    return product.title.toLowerCase().includes(query) && product.price >= minPrice && product.price <= maxPrice;
+  let filteredProducts = allProducts.filter((product) => {
+    return (
+      product.title.toLowerCase().includes(query) &&
+      product.price >= minPrice &&
+      product.price <= maxPrice
+    );
   });
 
   if (filteredProducts.length === 0) {
-    document.getElementById("product-container").innerHTML = "<p>No products found.</p>";
+    document.getElementById("product-container").innerHTML =
+      "<p>No products found.</p>";
     document.getElementById("pagination-controls").innerHTML = "";
   } else {
     renderProducts(filteredProducts);
@@ -152,13 +167,18 @@ const searchProduct = () => {
 };
 
 const selectCategory = () => {
-    const category = document.getElementById("category").value;
-  
-    // If 'All Categories' is selected, show all products; otherwise, filter by the selected category.
-    let filteredProducts = category === "" ? allProducts : allProducts.filter(product => product.category.toLowerCase() === category.toLowerCase());
-  
-    renderProducts(filteredProducts);
-  };
+  const category = document.getElementById("category").value;
+
+  // If 'All Categories' is selected, show all products; otherwise, filter by the selected category.
+  let filteredProducts =
+    category === ""
+      ? allProducts
+      : allProducts.filter(
+          (product) => product.category.toLowerCase() === category.toLowerCase()
+        );
+
+  renderProducts(filteredProducts);
+};
 
 const sorting = () => {
   const sort = document.getElementById("sorting").value;
@@ -174,8 +194,11 @@ const sorting = () => {
 const openPopup = (product) => {
   const popup = document.getElementById("popup");
   document.getElementById("popup-title").textContent = product.title;
-  document.getElementById("popup-description").textContent = product.description;
-  document.getElementById("popup-price").textContent = `Price: $${product.price}`;
+  document.getElementById("popup-description").textContent =
+    product.description;
+  document.getElementById(
+    "popup-price"
+  ).textContent = `Price: $${product.price}`;
   document.getElementById("popup-image").src = product.image;
   popup.classList.remove("hidden");
 };
@@ -198,10 +221,14 @@ const renderPaginationControls = (products) => {
     return button;
   };
 
-  const prevButton = createPaginationButton("Previous", () => {
-    currentPage--;
-    renderProducts(products);
-  }, currentPage === 1);
+  const prevButton = createPaginationButton(
+    "Previous",
+    () => {
+      currentPage--;
+      renderProducts(products);
+    },
+    currentPage === 1
+  );
   container.appendChild(prevButton);
 
   for (let i = 1; i <= totalPages; i++) {
@@ -216,10 +243,14 @@ const renderPaginationControls = (products) => {
     container.appendChild(pageButton);
   }
 
-  const nextButton = createPaginationButton("Next", () => {
-    currentPage++;
-    renderProducts(products);
-  }, currentPage === totalPages);
+  const nextButton = createPaginationButton(
+    "Next",
+    () => {
+      currentPage++;
+      renderProducts(products);
+    },
+    currentPage === totalPages
+  );
   container.appendChild(nextButton);
 
   const pageInfo = document.createElement("span");
