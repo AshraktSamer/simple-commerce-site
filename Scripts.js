@@ -81,7 +81,12 @@ const updateCartSummary = () => {
 };
 
 const removeItem = (index) => {
-  cartItems.splice(index, 1);
+
+  if (cartItems[index].quantity > 1) {
+    cartItems[index].quantity -= 1; 
+  } else {
+    cartItems.splice(index, 1); 
+  }
 
   updateCartDisplay();
   updateCartSummary();
